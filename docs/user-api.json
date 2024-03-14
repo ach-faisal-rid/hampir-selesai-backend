@@ -1,0 +1,234 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "User-API",
+        "description": "User API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/register": {
+            "post": {
+                "description": "Register new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "examples": {
+                                "faisal": {
+                                    "description": "Register user berhasil !",
+                                    "value": {
+                                        "username": "faisal",
+                                        "email": "faisalachmadridhani@gmail.com",
+                                        "password": "rahasia",
+                                        "name": "faisal achmad ridhani",
+                                        "role": "user",
+                                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY0NzE0NTg1NSwiZXhwIjoxNjQ3MTUzODU1fQ.yT5227jVq3f1234567890"
+                                    }
+                                }
+                            },
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "username",
+                                    "role",
+                                    "token"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "validationerror": {
+                                        "description": "Validation error",
+                                        "value": {
+                                            "errors": {
+                                                "username": [
+                                                    "username harus diisi",
+                                                    "username harus memiliki minimal 6 karakter",
+                                                    "username sudah terdaftar"
+                                                ],
+                                                "name": [
+                                                    "nama harus diisi"
+                                                ],
+                                                "email":
+                                                [
+                                                    "email harus diisi",
+                                                    "Format email tidak valid",
+                                                    "Email sudah terdaftar"
+                                                ],
+                                                "password":
+                                                [
+                                                    "password harus diisi",
+                                                    "Harus memiliki panjang minimal 8 karakter",
+                                                    "Harus ada kombinasi huruf besar dan kecil, angka, dan simbol"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Success register user",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success register !",
+                                        "value": {
+                                            "data": {
+                                                "id": 1,
+                                                "username": "faisal",
+                                                "email": "faisalachmadridhani@gmail.com",
+                                                "name": "faisal achmad ridhani",
+                                                "role": "user",
+                                                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY0NzE0NTg1NSwiZXhwIjoxNjQ3MTUzODU1fQ.yT5227jVq3f1234567890"
+                                            }
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "username": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "description": "Login user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "validationerror": {
+                                        "description": "Validation error",
+                                        "value": {
+                                            "errors": {
+                                                "password": [
+                                                    "password harus diisi",
+                                                    "password tidak cocok coba lagi"
+                                                ],
+                                                "email":
+                                                [
+                                                    "email harus diisi",
+                                                    "Format email tidak valid",
+                                                    "Email sudah terdaftar"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Success login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "username": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+    }
+}
