@@ -18,14 +18,14 @@ class UserController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
         ], [
             'name.required' => 'Nama harus diisi.',
             'email.required' => 'Email harus diisi.',
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah terdaftar.',
             'password.required' => 'Password harus diisi.',
-            'password.min' => 'Password harus memiliki setidaknya :min karakter.',
+            'password.regex' => 'Password harus minimal 8 karakter, mengandung huruf besar, huruf kecil, angka, dan karakter spesial.',
         ]);
 
         // Cek hasil validasi

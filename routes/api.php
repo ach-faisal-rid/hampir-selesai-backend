@@ -19,4 +19,17 @@ use App\Http\Controllers\Api\UserController;
 //     return $request->user();
 // });
 
-Route::post('api/registrasi', [UserController::class, 'registrasi']);
+Route::post('registrasi', [UserController::class, 'registrasi']);
+
+Route::middleware('role:admin')->get('/admin-dashboard', function () {
+    // ...
+});
+
+Route::middleware('role:freelancer')->get('/freelancer-jobs', function () {
+    // ...
+});
+
+Route::middleware('role:user')->get('/user-profile', function () {
+    // ...
+});
+
