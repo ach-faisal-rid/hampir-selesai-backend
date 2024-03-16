@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\UserController;
 // });
 
 Route::post('registrasi', [UserController::class, 'registrasi']);
+Route::post('login', [UserController::class, 'login']);
 
 Route::middleware('role:admin')->get('/admin-dashboard', function () {
     // ...
@@ -29,7 +30,7 @@ Route::middleware('role:freelancer')->get('/freelancer-jobs', function () {
     // ...
 });
 
-Route::middleware('role:user')->get('/user-profile', function () {
-    // ...
+Route::prefix('user')->middleware('auth:sanctum')->group(function () {
+    Route::post('/verifikasi-email', [UserController::class, 'verifikasiEmail']);
 });
 
