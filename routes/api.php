@@ -22,18 +22,18 @@ use App\Http\Controllers\Api\UserController;
 Route::post('registrasi', [UserController::class, 'registrasi']);
 Route::post('login', [UserController::class, 'login']);
 
-Route::middleware('role:admin')->get('/admin-dashboard', function () {
-    // ...
-});
-
-Route::middleware('role:freelancer')->get('/freelancer-jobs', function () {
-    // ...
-});
-
 Route::prefix('user')->middleware('auth:sanctum')->group(function () {
     Route::post('/verifikasi-email', [UserController::class, 'verifikasiEmail']);
     Route::get('/current', [UserController::class, 'currentUser']);
     Route::post('update-profile', [UserController::class, 'updateProfile']);
     Route::post('/update-password', [UserController::class, 'updatePassword']);
     Route::post('logout', [UserController::class, 'logout']);
+});
+
+Route::middleware('role:admin')->get('/admin-dashboard', function () {
+    // ...
+});
+
+Route::middleware('role:freelancer')->get('/freelancer-jobs', function () {
+    // ...
 });

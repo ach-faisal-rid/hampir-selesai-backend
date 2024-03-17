@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->integer('content_id'); // relasi ke content table
-            $table->integer('creator_id'); // relasi ke creator table
+            $table->integer('freelancer_id'); // relasi ke creator table
             $table->integer('buyer_id'); // relasi ke buyers table
             $table->integer('order_status_id'); // relasi ke order status table
 

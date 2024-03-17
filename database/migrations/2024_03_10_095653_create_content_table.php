@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('category_id'); // relasi ke category table
             $table->integer('platform_id'); // relasi ke platform table
-            $table->integer('creator_id'); // relasi ke creator table
+            $table->integer('freelancer_id'); // relasi ke creator table
 
             $table->longText('cover_image');
             $table->text('video_link')->nullable();
