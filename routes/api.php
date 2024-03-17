@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PlatformController;
+use App\Http\Controllers\Api\ContentController;
+
 use App\Http\Controllers\Api\UserController;
 
 /*
@@ -22,7 +25,8 @@ use App\Http\Controllers\Api\UserController;
 // });
 
 Route::get('categories', [CategoryController::class, 'all']);
-
+Route::get('platform', [PlatformController::class, 'all']);
+Route::get('contents', [ContentController::class, 'all']);
 
 Route::post('registrasi', [UserController::class, 'registrasi']);
 Route::post('login', [UserController::class, 'login']);

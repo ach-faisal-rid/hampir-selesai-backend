@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Platform;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class PlatformController extends Controller
 {
-    // mengambil semua data kategory
+    // mengambil semua data platform
     public function all(Request $request) {
         $id = $request->input('id');
         $limit = $request->input('limit');
@@ -16,35 +16,35 @@ class CategoryController extends Controller
         $show_content = $request->input('show.content');
 
         if($id) {
-            $category = Category::with(['content'])->find($id);
-            if($category) {
+            $platform = Platform::with(['content'])->find($id);
+            if($platform) {
                 return response()->json([
                     'success' => true,
-                    'data' => $category,
-                    'message' => 'Data Kategori berhasil diambil'
+                    'data' => $platform,
+                    'message' => 'Data Platform berhasil diambil'
                 ], 200);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Data Kategori tidak ada'
+                    'message' => 'Data Platform tidak ada'
                 ], 404);
             }
         }
 
-        $category = Category::query();
+        $platform = Platform::query();
 
         if ($name) {
-            $category->where('name', 'like', '%' . $name . '%');
+            $platform->where('name', 'like', '%' . $name . '%');
         }
 
         if ($show_content) {
-            $category->with('content');
+            $platform->with('content');
         }
 
         return response()->json([
             'success' => true,
-            'data' => $category->paginate($limit),
-            'message' => 'Data Kategori berhasil diambil'
+            'data' => $platform->paginate($limit),
+            'message' => 'Data Platform berhasil diambil'
         ], 200);
     }
 }

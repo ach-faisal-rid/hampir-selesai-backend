@@ -53,8 +53,7 @@ class User extends Authenticatable
         return $this->role === $role;
     }
 
-    public function freelancer()
-    {
-        return $this->belongsToMany(Creator::class);
+    public function detailUser() {
+        return $this->hasOne(UserDetail::class);
     }
 }

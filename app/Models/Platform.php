@@ -9,14 +9,13 @@ class Platform extends Model
 {
     use HasFactory;
 
+    protected $table = 'platform';
+
     protected $guarded  = [
         'id'
     ];
 
     public function Content() {
         return $this->hasMany(Content::class, 'platform_id', 'id');
-    }
-    public function Creator() {
-        return $this->hasMany(Creator::class, 'platform_id', 'id');
     }
 }

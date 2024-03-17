@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('creator', function (Blueprint $table) {
+        Schema::create('detail_user', function (Blueprint $table) {
             $table->id();
-
             $table->integer('users_id'); // relasi ke users table
-            $table->integer('category_id'); // relasi ke category table
-            $table->integer('platform_id'); // relasi ke platform table
 
             $table->text('biography')->nullable();
             $table->text('portofolio')->nullable();
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('creator');
+        Schema::dropIfExists('detail_user');
     }
 };
