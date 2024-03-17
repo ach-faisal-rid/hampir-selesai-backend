@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -149,33 +150,17 @@ class UserController extends Controller
         }
     }
 
-    public function updateCurrentUser(Request $request) {
-        $user = auth()->user();
+    public function updateProfile(Request $request) {
+        $data = $request->only('name', 'email', 'username', 'phone'); // Hanya ambil field yang dibutuhkan
 
-        if ($user) {
-            // Validasi input, termasuk validasi untuk phone
-            $request->validate([
-                'name' => 'string',
-                'email' => 'email|unique:users,email,' . $user->id,
-                'username' => 'required|string|unique:users,username,' . $user->id,
-                'phone' => ['nullable', 'string', 'max:255'], // Validasi format phone
-            ]);
+        $user = Auth::user();
+        $user->update($data);
 
-            // Perbarui informasi pengguna, termasuk phone
-            $user->update([
-                'name' => $request->input('name', $user->name),
-                'email' => $request->input('email', $user->email),
-                'username' => $request->input('username', $user->username),
-                'phone' => $request->input('phone', $user->phone), // Masukkan field phone
-            ]);
-
-            return response()->json([
-                'data' => $user,
-                'message' => 'Informasi pengguna berhasil diperbarui'
-            ], 200);
-        } else {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
+        // Return response JSON secara langsung
+        return response()->json([
+            'data' => $user,
+            'message' => 'Profile Updated!'
+        ], 200);
     }
 
 }
