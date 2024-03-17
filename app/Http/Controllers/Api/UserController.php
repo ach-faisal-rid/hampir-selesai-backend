@@ -180,4 +180,19 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function logout(Request $request) {
+        $token = $request->user()->currentAccessToken()->delete();
+
+        // Return plain JSON response
+        if ($token) {
+            return response()->json([
+            'message' => 'Successfully logged out'
+            ], 200);
+        } else {
+            return response()->json([
+            'message' => 'Error logging out'
+            ], 400); // Or appropriate error code
+        }
+    }
+
 }
