@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -177,6 +178,31 @@ class UserController extends Controller
         return response()->json([
             'data' => $user,
             'message' => 'Informasi profil berhasil diperbarui'
+        ], 200);
+    }
+
+    public function updatePassword(Request $request) {
+        $user = Auth::user();
+
+        $request->validate([
+            'current_password' => 'required|string',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        if (!Hash::check($request->input('current_password'), $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => 'Current password does not match.',
+            ]);
+        }
+
+        $user->forceFill([
+            'password' => Hash::make($request->input('password')),
+        ])->save();
+
+        event(new PasswordReset($user));
+
+        return response()->json([
+            'message' => 'Password updated successfully.',
         ], 200);
     }
 

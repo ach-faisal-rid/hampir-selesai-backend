@@ -34,5 +34,6 @@ Route::prefix('user')->middleware('auth:sanctum')->group(function () {
     Route::post('/verifikasi-email', [UserController::class, 'verifikasiEmail']);
     Route::get('/current', [UserController::class, 'currentUser']);
     Route::post('update-profile', [UserController::class, 'updateProfile']);
+    Route::post('/update-password', [UserController::class, 'updatePassword']);
     Route::post('logout', [UserController::class, 'logout']);
 });
