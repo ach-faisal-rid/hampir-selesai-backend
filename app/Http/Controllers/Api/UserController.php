@@ -151,15 +151,32 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request) {
-        $data = $request->only('name', 'email', 'username', 'phone'); // Hanya ambil field yang dibutuhkan
-
         $user = Auth::user();
+
+        // Gunakan data default
+        $data = $request->only('name', 'email');
+        if (!isset($data['phone'])) {
+            $data['phone'] = $user->phone;
+        }
+
+        // Hitung jumlah field yang diubah
+        $updatedFields = count(array_filter($data, function ($value) {
+            return $value !== null;
+        }));
+
+        // Cek apakah ada field yang diubah
+        if ($updatedFields === 0) {
+            return response()->json([
+                'message' => 'Anda belum memperbarui informasi profil'
+            ], 422);
+        }
+
+        // Perbarui informasi user
         $user->update($data);
 
-        // Return response JSON secara langsung
         return response()->json([
             'data' => $user,
-            'message' => 'Profile Updated!'
+            'message' => 'Informasi profil berhasil diperbarui'
         ], 200);
     }
 
