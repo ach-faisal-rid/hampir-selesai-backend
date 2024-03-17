@@ -132,4 +132,21 @@ class UserController extends Controller
         return response()->json(['message' => 'Email berhasil diverifikasi'], 200);
     }
 
+    public function currentUser() {
+        $user = auth()->user();
+
+        if ($user) {
+            return response()->json([
+                'data' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ],
+                'message' => 'Informasi pengguna saat ini',
+            ], 200);
+        } else {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+    }
+
 }
