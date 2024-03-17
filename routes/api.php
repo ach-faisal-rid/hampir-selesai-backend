@@ -33,5 +33,6 @@ Route::middleware('role:freelancer')->get('/freelancer-jobs', function () {
 Route::prefix('user')->middleware('auth:sanctum')->group(function () {
     Route::post('/verifikasi-email', [UserController::class, 'verifikasiEmail']);
     Route::get('/current', [UserController::class, 'currentUser']);
+    Route::post('/profile', [UserController::class, 'updateCurrentUser']);
 });
 

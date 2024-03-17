@@ -149,4 +149,33 @@ class UserController extends Controller
         }
     }
 
+    public function updateCurrentUser(Request $request) {
+        $user = auth()->user();
+
+        if ($user) {
+            // Validasi input, termasuk validasi untuk phone
+            $request->validate([
+                'name' => 'string',
+                'email' => 'email|unique:users,email,' . $user->id,
+                'username' => 'required|string|unique:users,username,' . $user->id,
+                'phone' => ['nullable', 'string', 'max:255'], // Validasi format phone
+            ]);
+
+            // Perbarui informasi pengguna, termasuk phone
+            $user->update([
+                'name' => $request->input('name', $user->name),
+                'email' => $request->input('email', $user->email),
+                'username' => $request->input('username', $user->username),
+                'phone' => $request->input('phone', $user->phone), // Masukkan field phone
+            ]);
+
+            return response()->json([
+                'data' => $user,
+                'message' => 'Informasi pengguna berhasil diperbarui'
+            ], 200);
+        } else {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+    }
+
 }
